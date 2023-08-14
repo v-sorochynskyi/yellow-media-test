@@ -17,6 +17,14 @@ const defaultLayoutRoutes: RouteRecordRaw = {
         label: 'movies'
       },
       component: () => import('@/views/movies/MoviesList.vue')
+    },
+    {
+      path: 'sessions',
+      name: routeNames.sessions,
+      meta: {
+        label: 'sessions'
+      },
+      component: () => import('@/views/sessions/Sessions.vue')
     }
   ]
 }

@@ -1,4 +1,5 @@
 export const routeNames = {
   rootPage: 'rootPage',
-  movies: 'movies'
+  movies: 'movies',
+  sessions: 'sessions'
 }

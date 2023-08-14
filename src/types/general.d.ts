@@ -12,3 +12,13 @@ interface IMovie {
   image: string
   additional: string
 }
+
+interface IGenreOption {
+  value: string
+  label: string
+}
+
+interface IMoviesPayload {
+  name?: string
+  genres?: number
+}

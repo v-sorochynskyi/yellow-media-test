@@ -11,3 +11,12 @@ export enum EElComponentSize {
   default = 'default',
   large = 'large'
 }
+
+export enum EGenres {
+  ACTION,
+  ADVENTURES,
+  COMEDY,
+  DRAMA,
+  HORROR,
+  WESTERNS
+}

@@ -1,10 +1,13 @@
-.slide-fade-enter-active {
+.fade-enter-active {
   transition: all .5s ease;
 }
-.slide-fade-leave-active {
+
+.fade-leave-active {
   transition: all .5s ease;
 }
-.slide-fade-enter, .slide-fade-leave-to {
-  transform: translateX(225px);
+
+.fade-enter,
+.fade-leave-to {
+  // transform: translateX(225px);
   opacity: 0;
 }

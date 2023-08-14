@@ -1,6 +1,6 @@
 class GeneralService {
-  getSomeData () {
-    return useHttp.get('/movies')
+  getSomeData (payload: IMoviesPayload) {
+    return useHttp.get('/movies', { params: payload })
   }
 }
 
