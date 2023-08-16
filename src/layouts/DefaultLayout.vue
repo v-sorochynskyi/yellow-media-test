@@ -28,22 +28,24 @@
 
     <div class="flex-grow overflow-auto p-4">
       <router-view #default="{ Component }">
-        <transition name="fade">
+        <transition name="fade" mode="out-in">
           <component :is="Component" />
         </transition>
       </router-view>
     </div>
+
+    <ShowPlacesModal />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { defaultLayoutRoutes } from '@/router/routes'
+import { navigationRoutes } from '@/router/routes'
 
 const generalStore = useGeneralStore()
 const { generalLoading } = storeToRefs(generalStore)
 
 const navigation = [
-  ...defaultLayoutRoutes.children?.map(route => ({
+  ...navigationRoutes.map(route => ({
     name: route.name as string,
     label: route.meta?.label || ''
     // ...

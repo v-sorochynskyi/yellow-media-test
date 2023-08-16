@@ -1,6 +1,6 @@
 <template>
   <div class="h-full flex flex-col">
-    <div class="flex flex-none">
+    <div class="flex flex-none items-center mb-5">
       <el-input
         v-model="searchValue"
         class="max-w-[300px]"
@@ -21,9 +21,25 @@
           {{ item.label }}
         </el-option>
       </el-select>
+      <span class="ml-4">{{ movieList.length }} {{ movieList.length > 1 ? 'items': 'item' }}</span>
     </div>
-    <div class="flex items-center flex-auto">
-      <MoviesCarousel v-if="movieList" :movieList="movieList" />
+
+    <div class="flex flex-auto overflow-y-auto">
+      <div
+        v-if="movieList?.length"
+        class="grid grid-cols-auto-fill w-full gap-4 p-3"
+      >
+        <MoviesImage
+          v-for="item in movieList"
+          :key="item.id"
+          :image="item.image"
+          class="w-full cursor-pointer max-h-[400px] hover:scale-105 transition-transform"
+          @click="$router.push({ name: $routeNames.movieDetails, params: {id: item.id} })"
+        />
+      </div>
+      <div v-else class="flex h-full w-full justify-center items-center">
+        No data
+      </div>
     </div>
   </div>
 </template>
@@ -32,11 +48,15 @@
 import { EGenres } from '@/types/enums'
 
 const generalStore = useGeneralStore()
+const moviesListStore = useMoviesListStore()
 const { generalLoading } = storeToRefs(generalStore)
+const { movieList } = storeToRefs(moviesListStore)
 
-const movieList = ref<IMovie[]>()
+const allOptionValue = 'ALL'
 const searchValue = ref('')
-const genreValue = ref()
+const genreValue = ref(allOptionValue)
+
+generalLoading.value = true
 
 const genres = Object.fromEntries(Object.entries(EGenres)
   .filter((pair) => isNaN(Number(pair[0]))))
@@ -51,9 +71,9 @@ const genreOptions = (Object.keys(genres) as string[])
     return acc
   }, [] as IGenreOption[])
 
-const allOptionValue = 'ALL'
-
-generalLoading.value = true
+onMounted(() => {
+  getMovies()
+})
 
 const debouncedFn = useDebounceFn(() => {
   getMovies()
@@ -67,21 +87,12 @@ function getMovies () {
 
   generalLoading.value = true
 
-  return generalService.getSomeData(payload)
-    .then(({ data }: {data: IMovie[]}) => {
-      movieList.value = data
-    }).catch((e) => {
-      console.log(e)
-    }).finally(() => {
-      generalLoading.value = false
-    })
+  moviesListStore.getMovieList(payload)
+    .catch((e) => (console.log(e)))
+    .finally(() => (generalLoading.value = false))
 }
 
 function onSelectGenre () {
   getMovies()
 }
-
-onMounted(() => {
-  getMovies()
-})
 </script>

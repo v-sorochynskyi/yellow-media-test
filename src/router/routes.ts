@@ -11,6 +11,11 @@ const defaultLayoutRoutes: RouteRecordRaw = {
   children: [
     // list of views that use default layout
     {
+      path: '/movies/:id',
+      name: routeNames.movieDetails,
+      component: () => import('@/views/movieDetails/MovieDetails.vue')
+    },
+    {
       path: 'movies',
       name: routeNames.movies,
       meta: {
@@ -29,6 +34,8 @@ const defaultLayoutRoutes: RouteRecordRaw = {
   ]
 }
 
+const [movieDetailsRoute, ...navigationRoutes] = defaultLayoutRoutes.children
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/:pathMatch(.*)*',
@@ -40,5 +47,7 @@ const routes: Array<RouteRecordRaw> = [
 
 export {
   routes,
-  defaultLayoutRoutes
+  defaultLayoutRoutes,
+  navigationRoutes,
+  movieDetailsRoute
 }
