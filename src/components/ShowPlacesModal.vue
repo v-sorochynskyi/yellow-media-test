@@ -106,7 +106,7 @@ function makeOrder () {
     .then((res) => {
       reset()
       isShowPlacesDialog.value = false
-      ElNotification({ type: 'success', message: `${res.length} ${res.length > 0 ? 'tickets have' : 'ticket has'} been booked` })
+      ElNotification({ type: 'success', message: `${res.length} ${res.length > 1 ? 'tickets have' : 'ticket has'} been booked` })
       return res
     })
     // .then(() => {
