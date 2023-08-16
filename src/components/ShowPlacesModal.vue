@@ -1,7 +1,15 @@
 <template>
-  <ElDialog v-model="isShowPlacesDialog" title="Seats" width="80%" @open="getPlaces" @close="reset">
+  <ElDialog v-model="isShowPlacesDialog" width="80%" @open="getPlaces" @close="reset">
+    <template #header>
+      <div class="flex items-center space-x-4">
+        <p class="text-primary">
+          {{ useDateFormat(new Date(placesPayload?.showdate as string), 'dddd DD MMMM YYYY').value.replace('"', '') }}
+          {{ placesPayload?.daytime }}
+        </p>
+      </div>
+    </template>
     <div v-loading="loading" class="flex flex-col items-center w-full">
-      <div v-for="item in placesData" :key="item[0].row" class="flex items-center space-x-4 w-full">
+      <div v-for="item in placesData" :key="item[0].row" class="flex items-center justify-center space-x-4 w-full">
         <div class="w-5">{{ item[0].row }}</div>
 
         <el-checkbox-group class="flex overflow-x-auto" @change="changeHandler($event, item[0].row)">
@@ -38,6 +46,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useDateFormat } from '@vueuse/core'
 import { ElNotification } from 'element-plus'
 import type { ElDialog, CheckboxValueType } from 'element-plus'
 

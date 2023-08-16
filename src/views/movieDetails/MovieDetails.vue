@@ -25,7 +25,7 @@
             <div
               v-for="time in session.daytime.split(';')"
               :key="time"
-              class="cursor-pointer hover:text-red-400 hover:underline"
+              class="cursor-pointer text-primary hover:text-red-400 hover:underline"
               @click="generalStore.showPlacesDialog({
                 movie_id: route.params.id,
                 daytime: time,
